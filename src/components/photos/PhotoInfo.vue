@@ -46,7 +46,7 @@ export default {
       //     this.photoinfo = result.body.message[0]
       //   }
       // })
-      this.$http.get("../../../photoinfoData.json").then(result => {
+      this.$http.get("../../../data/photoinfoData.json").then(result => {
         if (result.status === 200) {
           // console.log(result);
           for (var j=0; j<result.body.length; j++) {

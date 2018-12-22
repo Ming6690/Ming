@@ -4,7 +4,7 @@
     <h1 class="title"> {{ newsinfo.title }} </h1>
     <!-- 子标题 -->
     <p class="subtitle">
-      <span>发表时间: {{ newsinfo.add_time }} </span>
+      <span>发表时间: {{ newsinfo.add_time | dateFormat }} </span>
       <span>点击: {{ newsinfo.click }}次</span>
     </p>
 
@@ -45,7 +45,7 @@
         // })
 
 
-        this.$http.get('../../../data.json').then(result => {
+        this.$http.get('../../../data/data.json').then(result => {
           if(result.status === 200) {
             for(var j=0;j<result.body.length;j++) {
               if(result.body[j].id == this.id){

@@ -40,7 +40,7 @@
       //     }
       //   })
 
-        this.$http.get('../../../data.json').then(result => {
+        this.$http.get('../../../data/data.json').then(result => {
           // console.log(result);
           if(result.status === 200) {
             this.newslist = result.body

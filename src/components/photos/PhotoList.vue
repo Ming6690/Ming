@@ -58,7 +58,7 @@ export default {
       // })
 
       // 获取本地所有的图片分类
-      this.$http.get("../../../photoData.json").then(result => {
+      this.$http.get("../../../data/photoData.json").then(result => {
         // 手动拼接一个最完整的 分类列表
         if(result.status === 200) {
           result.body.unshift( { title: "全部", id: 0 })
@@ -75,7 +75,7 @@ export default {
       // })
 
       // 根据分类 Id,获取本地图片列表
-      this.$http.get("../../../photoData.json").then(result => {
+      this.$http.get("../../../data/photoData.json").then(result => {
         // console.log(result.body);
         if (result.status === 200) {
           if ( cateId === 0 ) {

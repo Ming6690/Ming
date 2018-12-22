@@ -46,7 +46,7 @@ export default {
       //     }
       //   })
 
-      this.$http.get('../../../data.json').then(result => {
+      this.$http.get('../../../data/data.json').then(result => {
         if(result.status === 200) {
           for(var j=0;j<result.body.length;j++) {
             if(result.body[j].id == this.id){
@@ -72,12 +72,13 @@ export default {
         return Toast("评论内容不能为空！");
       }
 
-      this.$http.get('../../../data.json').then(result => { // 数据不能保存
+      this.$http.get('../../../data/data.json').then(result => { // 数据不能保存
         if(result.status === 200) {
           for(var j=0;j<result.body.length;j++) {
             if(result.body[j].id == this.$route.params.id){
               var cmt = { "user_name": "匿名用户", "add_time": Date.now(), "content": this.msg.trim() };
               result.body[j].comment.unshift(cmt)
+              // console.log(result.body[j].comment);
               this.msg = ""
               this.comments = result.body[j].comment
               console.log(result.body[j].comment);
