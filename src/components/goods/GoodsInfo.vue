@@ -93,7 +93,17 @@ export default {
       this.$router.push({ name: "goodscomment", params: { id } })
     },
     addToShopCar() {
+      // 添加到购物车
       this.ballFlag = !this.ballFlag
+      var goods = { // 商品信息对象
+        id: this.id, 
+        count: this.selectedCount, 
+        price: this.goodsinfo.sell_price,
+        selected: true
+      }
+
+      // 调用store中的 mutations 来将商品加入购物车
+      this.$store.commit("addToCar", goods)
     },
     beforeEnter(el) {
       el.style.transform = "translate(0,0)"
