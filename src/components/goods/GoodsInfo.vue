@@ -4,7 +4,7 @@
       @before-enter="beforeEnter"
       @enter="enter"
       @after-enter="afterEnter">
-      <div class="ball" v-show="ballFlag"></div>
+      <div class="ball" v-show="ballFlag" ref="ball"></div>
     </transition>
 
     <!-- 商品轮播图区域 -->
@@ -24,7 +24,7 @@
           <p class="price">
             市场价:<del>￥{{ goodsinfo.market_price }}</del>&nbsp;&nbsp;销售价:<span class="now_price">￥{{ goodsinfo.sell_price }}</span>
           </p>
-          <p>购买数量: <numbox></numbox></p>
+          <p>购买数量: <numbox @getcount="getSelectedCount" :max="goodsinfo.quantity"></numbox></p>
           <p class="mtb">
             <mt-button type="primary" size="small">立即购买</mt-button>
             <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
@@ -64,6 +64,7 @@ export default {
       lunbotu: [], // 轮播图数据
       goodsinfo: {}, // 商品信息
       ballFlag: false, // 控制小球的隐藏与显示
+      selectedCount: 1, // 保存用户选中商品的数量，默认为1
     }
   },
   created() {
@@ -99,12 +100,26 @@ export default {
     },
     enter(el, done) {
       el.offsetWidth;
-      el.style.transform = "translate(26px, 212px)"
+      // 获取小球和徽标的横纵坐标，得到 x轴和y轴 的差值，就是小球要移动的距离
+      
+      // 获取小球在页面中的位置
+      const ballPosition = this.$refs.ball.getBoundingClientRect()
+      // 获取徽标在页面中的位置
+      const badgePosition = document.getElementById('badge').getBoundingClientRect()
+
+      const xDist = badgePosition.left - ballPosition.left
+      const yDist = badgePosition.top - ballPosition.top
+      el.style.transform = `translate(${xDist}px, ${yDist}px)`
       el.style.transition = "all 0.3s cubic-bezier(.4,-.3,1,.68)"
       done()
     },
     afterEnter(el) {
       this.ballFlag = !this.ballFlag
+    },
+    getSelectedCount(count) {
+      // 当子组件把选中的数量传递给父组件的时候，把选中的值保存到 data 上
+      this.selectedCount = count
+      // console.log(this.selectedCount);
     }
   },
   components: {
